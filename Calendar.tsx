@@ -2,7 +2,13 @@
 import React, { useEffect } from "react";
 import "../App.css";
 
-function Calendar({ tableId, month, setMonth }) {
+interface CalendarProps {
+  tableId: string;
+  month: number;
+  setMonth: (month: number) => void; // setMonth is a function that takes a number and returns void
+}
+
+function Calendar({ tableId, month, setMonth }: CalendarProps) {
   const year = 2023; // Fixed year
 
   useEffect(() => {
