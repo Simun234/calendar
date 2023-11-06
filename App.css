@@ -1,35 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
-/* font-family: 'Roboto', sans-serif; */
-
-* {
-  box-sizing: border-box;
-}
-
-h1 {
-  font-family: "Roboto", sans-serif;
-  color: #000;
-  font-size: 30px;
-}
-
-button {
-  float: right;
-  margin: 5px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-tr,
-th {
+.calendar-container {
   background-color: #cdf5fd;
-  color: #00a9ff;
+  width: 100%;
+  margin: auto;
+  position: absolute;
 }
 
-tr,
-td {
-  border: 1px solid #000;
-  background-color: #fff;
+.weekdays-container {
+  display: flex;
+  margin: auto;
+  justify-content: space-around;
+}
+
+.weekdays-container .week-day {
+  color: #00a9ff;
 }
