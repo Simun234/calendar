@@ -10,13 +10,12 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ tableId, month, setMonth }) => {
-  const year = 2023; // Fixed year
+  const year = 2023; // Fixed year for example purposes
   const [commitData, setCommitData] = useState<any[]>([]);
 
   useEffect(() => {
     // Function to fetch commit data
     const fetchCommits = async () => {
-      // Construct the API URL for fetching commits for the given month and year
       const since = new Date(year, month - 1, 1).toISOString();
       const until = new Date(year, month, 0).toISOString();
 
@@ -38,6 +37,16 @@ const Calendar: React.FC<CalendarProps> = ({ tableId, month, setMonth }) => {
 
     fetchCommits();
   }, [month]);
+
+  // Function to display commit details in an alert or modal
+  const displayCommitDetails = (commitInfo: any) => {
+    // Placeholder for displaying details - replace with your own component or UI display logic
+    alert(
+      `Commits on this day:\n${commitInfo
+        .map((commit: any) => commit.commit.message)
+        .join("\n")}`
+    );
+  };
 
   useEffect(() => {
     const tableBody = document.querySelector(`#${tableId} tbody`);
@@ -65,7 +74,6 @@ const Calendar: React.FC<CalendarProps> = ({ tableId, month, setMonth }) => {
           weekRow.appendChild(dateCell);
           continue;
         } else {
-          // Check if there's commit data for this date and display it
           const currentDate = new Date(year, month - 1, date);
           const commitInfo = commitData.filter(
             (commit) =>
@@ -75,13 +83,13 @@ const Calendar: React.FC<CalendarProps> = ({ tableId, month, setMonth }) => {
 
           dateCell.textContent = date.toString();
           if (commitInfo.length > 0) {
-            // If there are commits on this date, add an indicator
-            const commitIndicator = document.createElement("div");
+            const commitIndicator = document.createElement("span");
             commitIndicator.className = "commit-indicator";
             commitIndicator.title = commitInfo
               .map((commit) => commit.commit.message)
               .join("\n");
-            commitIndicator.textContent = "C"; // Placeholder for an icon or commit count
+            commitIndicator.textContent = "C";
+            commitIndicator.onclick = () => displayCommitDetails(commitInfo);
             dateCell.appendChild(commitIndicator);
           }
 
@@ -94,7 +102,7 @@ const Calendar: React.FC<CalendarProps> = ({ tableId, month, setMonth }) => {
         break;
       }
     }
-  }, [commitData, month, tableId]);
+  }, [commitData, month, tableId, year]);
 
   const goToPreviousMonth = () => {
     setMonth(month > 1 ? month - 1 : 12);
